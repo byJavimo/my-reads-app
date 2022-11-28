@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Book from './Book';
 
 const Shelf = ({shelf, books, onUpdateBook}) => {
-    const filteredBooksByShelf = books.filter((book) => {
+    const filteredBooksByShelf = books?.filter((book) => {
         if(book.shelf === shelf.id) {
             return book;
         };
@@ -12,10 +12,10 @@ const Shelf = ({shelf, books, onUpdateBook}) => {
         <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf.name}</h2>
             <ul className="books-grid">
-                {
-                    filteredBooksByShelf.map((item, key) => {
-                        return <li key={key}><Book book={item} onUpdateBook={onUpdateBook}></Book></li>
-                    })
+                {   filteredBooksByShelf.length ? 
+                        filteredBooksByShelf.map((item, key) => {
+                            return <li key={key}><Book book={item} onUpdateBook={onUpdateBook}></Book></li>
+                        }) : <li> No books available in this category</li>
                 }
             </ul>
         </div>
