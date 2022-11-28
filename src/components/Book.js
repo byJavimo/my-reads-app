@@ -1,11 +1,30 @@
 import PropTypes from 'prop-types';
 import SelectShelfButton from './SelectShelfButton';
 
-const Book = ({book, shelves, onChangeShelf}) => {
-    const handleSelfChange = (event) => {
-        debugger;
-        onChangeShelf();
-    }
+const Book = ({book, shelves, onUpdateBook}) => {
+    const CATEGORY_SHELVES = [
+        {
+         id: 'currentlyReading',
+         name: "Currently reading"
+        },
+        {
+         id: 'wantToRead',
+         name: "Want to read",
+        },
+        {
+         id: 'read',
+         name:  "Read"
+        },
+        {
+         id: 'none',
+         name: 'None'
+        }
+    ];
+
+    const handleSelfChange = (shelfSelected) => {
+        onUpdateBook(book, shelfSelected);
+    };
+
     return (
         <div className='book'>
             <div className='book-top'>
@@ -14,7 +33,7 @@ const Book = ({book, shelves, onChangeShelf}) => {
             <div className="book-cover-title">{book?.title}</div>
             <div className="book-authors">{book?.authors}</div>
             <div className="book-shelf-changer">
-                <SelectShelfButton shelves={shelves} onChangeShelf={handleSelfChange}></SelectShelfButton>
+                <SelectShelfButton options={CATEGORY_SHELVES} onChangeShelf={handleSelfChange} optionSelected={book.shelf}></SelectShelfButton>
             </div>
       
         </div>

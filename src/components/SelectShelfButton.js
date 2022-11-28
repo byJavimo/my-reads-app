@@ -1,17 +1,12 @@
-import { useState } from "react";
-
-const SelectShelfButton = ({shelves, onChangeShelf}) => {
-    const [shelfSelected, setShelfSelected] = useState({});
-
+const SelectShelfButton = ({options , optionSelected, onChangeShelf}) => {
     const handleChange = (event) => {
-        debugger
         event.preventDefault();
-        onChangeShelf(event);
+        onChangeShelf(event.target.value);
     };
     return (
-        <select onChange={handleChange} defaultValue={shelfSelected.id} >
+        <select onChange={handleChange} defaultValue={optionSelected} >
              <optgroup label="Move to">
-                {shelves.map((item) =>{
+                {options.map((item) =>{
                     return <option key={item.id} value={item.id}>{item.name}</option>
                 })}
             </optgroup>

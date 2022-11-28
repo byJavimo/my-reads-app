@@ -9,21 +9,21 @@ import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 
 function App() {
+  const SHELVES = [
+    {
+     id: 'currentlyReading',
+     name: "Currently reading"
+    },
+    {
+     id: 'wantToRead',
+     name: "Want to read",
+    },
+    {
+     id: 'read',
+     name:  "Read"
+    }
+  ];
   const [books, setBooks] = useState([]);
-  const [shelves, setShelves] = useState([
-   {
-    id: 'currentlyReading',
-    name: "Currently reading"
-   },
-   {
-    id: 'wantToRead',
-    name: "Want to read",
-   },
-   {
-    id: 'read',
-    name:  "Read"
-   }
-  ]);
 
   const getAllBooks = () => {
     const getAll = async () => {
@@ -32,15 +32,16 @@ function App() {
     }
     getAll();
   };
-  const updateBook = (book) => {
+
+  const updateBook = (book, shelf) => {
     const update = async () => {
-      const res = await BooksAPI.update(book);
-      setBooks(res);
+      await BooksAPI.update(book, shelf);
+      getAllBooks();
     }
     update();
   };
 
-  const onChangeShelf = (book, shelf) => {
+  const onUpdateBook = (book, shelf) => {
     updateBook(book, shelf)
   };
 
@@ -55,7 +56,7 @@ function App() {
           exact
           path="/"
           element={
-          <MainPage title="My reads app" books={books} shelves={shelves} onChangeShelf={onChangeShelf}/>
+            <MainPage title="My reads app" books={books} shelves={SHELVES} onUpdateBook={onUpdateBook}/>
           }
         />
       <Route
