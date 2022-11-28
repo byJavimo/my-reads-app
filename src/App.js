@@ -24,10 +24,14 @@ function App() {
     }
   ];
   const [books, setBooks] = useState([]);
-
+  
   const getAllBooks = () => {
     const getAll = async () => {
       const res = await BooksAPI.getAll();
+      // If book has no shelf assigned, none is assigned;
+      res.forEach(element => {
+        element.shelf = element.shelf ? element.shelf : 'none';
+      });
       setBooks(res);
     }
     getAll();
@@ -47,7 +51,7 @@ function App() {
 
   useEffect(() => {
     getAllBooks();
-  },[]);
+  });
 
   return (
     <div className="app">
@@ -62,7 +66,7 @@ function App() {
       <Route
         path="/search"
         element={
-          <SearchPage/>
+          <SearchPage books={books} onUpdateBook={onUpdateBook}/>
         }
       />
     </Routes>

@@ -3,7 +3,6 @@ import Header from '../components/Header.js';
 import Shelf from '../components/Shelf.js'
 
 const MainPage = ({title, books, shelves, onUpdateBook}) => {
-
     return (
         <div>
             <Header title={title}></Header>

@@ -1,20 +1,49 @@
 import { Link } from 'react-router-dom';
 import SearchBox from '../components/SearchBox';
 import Book from '../components/Book';
+import * as BooksAPI from '../BooksAPI';
+import { useEffect, useState } from 'react';
 
-const SearchPage = () => {
+const SearchPage = ({books, onUpdateBook}) => {
+    const [searchResults, setSearchResults] = useState([]);
+    const _getBookById = (bookId) => {
+        return books?.find(element => element.id === bookId);
+    };
+    const onSearchBook = (searchQuery) => {
+        const search = async () => {
+            let res = await BooksAPI.search(searchQuery);
+            let result = res?.map((element) => {
+                return _getBookById(element.id) || element;
+            });
+            setSearchResults(result);
+        }
+        debugger;
+        if (searchQuery) {
+            search();
+        } else {
+            setSearchResults([]);
+        }
+    };
 
     return (
         <div>
             <div className='search-books-bar'>
                 <Link className="close-search" to="/"></Link>
-                <SearchBox type={"text"} helpText={"Search by Title, authot or ISBN"}></SearchBox>
-            
+                <SearchBox type={"text"} helpText={"Search by Title, authot or ISBN"} onSearchBook={onSearchBook}></SearchBox>
             </div>
             <div className='search-books-results'>
-            Resultados
-            {/* <Book></Book> */}
-        </div>
+                <ul className='books-grid'> 
+                    {
+                        searchResults?.map((item, key) => {
+                            return <li key={key}><Book book={item} onUpdateBook={onUpdateBook} ></Book></li>
+                        }) 
+                    }
+                    
+                </ul>
+     
+            </div>
+            
+        
         </div>
 
     )

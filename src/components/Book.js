@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import SelectShelfButton from './SelectShelfButton';
 
-const Book = ({book, shelves, onUpdateBook}) => {
+const Book = ({book, onUpdateBook}) => {
     const CATEGORY_SHELVES = [
         {
          id: 'currentlyReading',
@@ -25,6 +25,10 @@ const Book = ({book, shelves, onUpdateBook}) => {
         onUpdateBook(book, shelfSelected);
     };
 
+    const setDefaultShelfSelected = (book) => {
+        return book.shelf ? book.shelf : 'none';
+    }
+
     return (
         <div className='book'>
             <div className='book-top'>
@@ -33,9 +37,8 @@ const Book = ({book, shelves, onUpdateBook}) => {
             <div className="book-cover-title">{book?.title}</div>
             <div className="book-authors">{book?.authors}</div>
             <div className="book-shelf-changer">
-                <SelectShelfButton options={CATEGORY_SHELVES} onChangeShelf={handleSelfChange} optionSelected={book.shelf}></SelectShelfButton>
+                <SelectShelfButton options={CATEGORY_SHELVES} onChangeShelf={handleSelfChange} optionSelected={setDefaultShelfSelected(book)}></SelectShelfButton>
             </div>
-      
         </div>
     )
 }
