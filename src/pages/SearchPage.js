@@ -22,7 +22,6 @@ const SearchPage = ({books, onUpdateBook}) => {
                 setSearchResults(result);
             }
         }
-        debugger;
         if (searchQuery) {
             search();
         } else {
