@@ -12,7 +12,6 @@ const SearchPage = ({books, onUpdateBook}) => {
     const onSearchBook = (searchQuery) => {
         const search = async () => {
             let res = await BooksAPI.search(searchQuery);
-            console.log(res);
             if (res.error) {
                 setSearchResults(res.error.items);
             } else {
